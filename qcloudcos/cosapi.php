@@ -3,6 +3,7 @@
 namespace qcloudcos;
 
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'error_code.php');
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'libcurl_helper.php');
 
 date_default_timezone_set('PRC');
 
@@ -45,8 +46,8 @@ class Cosapi {
      * @param  string  $dstPath      上传的文件路径
      * @param  string  $bizAttr      文件属性
      * @param  string  $slicesize    分片大小(512k,1m,2m,3m)，默认:1m
-     * @param  string  $insertOnly   同名文件是否覆盖
-     * @return [type]                [description]
+     * @param  string  $insertOnly   同名文件是否覆盖 
+     * @return array
      */
     public static function upload(
             $bucket, $srcPath, $dstPath, $bizAttr=null, $sliceSize=null, $insertOnly=null) {
@@ -241,8 +242,8 @@ class Cosapi {
      * @param  string  $srcPath     本地文件路径
      * @param  string  $dstPath     上传的文件路径
      * @param  string  $bizAttr     文件属性
-     * @param  int     $insertOnly  是否覆盖同名文件:0 覆盖,1:不覆盖
-     * @return [type]               [description]
+     * @param  int     $insertOnly  是否覆盖同名文件:0 覆盖,1:不覆盖 
+     * @return array
      */
     private static function uploadFile($bucket, $srcPath, $dstPath, $bizAttr = null, $insertOnly = null) {
         $srcPath = realpath($srcPath);
@@ -293,8 +294,8 @@ class Cosapi {
      * @param  string  $dstPath     上传的文件路径
      * @param  string  $bizAttr     文件属性
      * @param  string  $sliceSize   分片大小
-     * @param  int     $insertOnly  是否覆盖同名文件:0 覆盖,1:不覆盖
-     * @return [type]                [description]
+     * @param  int     $insertOnly  是否覆盖同名文件:0 覆盖,1:不覆盖 
+     * @return array
      */
     private static function uploadBySlicing(
             $bucket, $srcFpath,  $dstFpath, $bizAttr=null, $sliceSize=null, $insertOnly=null) {
@@ -627,7 +628,7 @@ class Cosapi {
     /**
      * 判断authority值是否正确
      * @param  string  $authority
-     * @return [type]  bool
+     * @return bool
      */
     private static function isAuthorityValid($authority) {
         if ($authority == 'eInvalid' || $authority == 'eWRPrivate' || $authority == 'eWPrivateRPublic') {
@@ -639,7 +640,7 @@ class Cosapi {
     /**
      * 判断pattern值是否正确
      * @param  string  $authority
-     * @return [type]  bool
+     * @return bool
      */
     private static function isPatternValid($pattern) {
         if ($pattern == 'eListBoth' || $pattern == 'eListDirOnly' || $pattern == 'eListFileOnly') {
@@ -651,7 +652,7 @@ class Cosapi {
     /**
      * 判断是否符合自定义属性
      * @param  string  $key
-     * @return [type]  bool
+     * @return bool
      */
     private static function isCustomer_header($key) {
         if ($key == 'Cache-Control' || $key == 'Content-Type' ||
@@ -666,8 +667,8 @@ class Cosapi {
 	/**
      * 增加自定义属性到data中
      * @param  array  $data
-	 * @param  array  $customer_headers_array
-     * @return [type]  void
+     * @param  array  $customer_headers_array
+     * @return void
      */
     private static function add_customer_header(&$data, &$customer_headers_array) {
         if (count($customer_headers_array) < 1) {
@@ -717,7 +718,7 @@ class Cosapi {
      * @param $srcFpath source file path.
      * @param $dstFpath destination file path.
      * @param $overwrite if the destination location is occupied, overwrite it or not?
-     * @return array|mixed.
+     * @return array
      */
     public static function copyFile($bucket, $srcFpath, $dstFpath, $overwrite = false) {
         $url = self::generateResUrl($bucket, $srcFpath);
@@ -746,7 +747,7 @@ class Cosapi {
      * @param $srcFpath source file path.
      * @param $dstFpath destination file path.
      * @param $overwrite if the destination location is occupied, overwrite it or not?
-     * @return array|mixed.
+     * @return array
      */
     public static function moveFile($bucket, $srcFpath, $dstFpath, $overwrite = false) {
         $url = self::generateResUrl($bucket, $srcFpath);

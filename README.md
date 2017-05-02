@@ -4,6 +4,13 @@ cos-php-sdk：php sdk for [腾讯云对象存储服务](https://www.qcloud.com/p
 ### 安装（直接下载源码集成）
 直接从[github](https://github.com/tencentyun/cos-php-sdk-v4)下载源码，然后在您的程序中加载cos-php-sdk-v4/include.php就可以了。
 
+
+### 安装（使用 composer 下载源码） 
+```  
+composer config repositories.packagist git https://github.com/tencentyun/cos-php-sdk-v4
+composer require tencentyun/cos-php-sdk-v4 dev-master
+``` 
+
 ### 修改配置
 修改cos-php-sdk-v4/qcloudcos/conf.php内的APPID、SECRET_ID、SECRET_KEY为您的配置。
 
@@ -13,6 +20,13 @@ cos-php-sdk：php sdk for [腾讯云对象存储服务](https://www.qcloud.com/p
 ```php
 // 包含cos-php-sdk-v4/include.php文件
 require('cos-php-sdk-v4/include.php');
+
+//使用 composer
+//require __DIR__."/vendor/autoload.php";
+//qcloudcos\Conf::$APP_ID="";
+//qcloudcos\Conf::$SECRET_ID="";
+//qcloudcos\Conf::$SECRET_KEY="";
+
 use qcloudcos\Cosapi;
 
 // 设置COS所在的区域，对应关系如下：

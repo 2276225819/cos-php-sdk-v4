@@ -1,0 +1,8 @@
+{
+    "name":"tencentyun/cos-php-sdk-v4", 
+    "autoload":{
+        "psr-4":{
+            "qcloudcos\\":"./qcloudcos"
+        } 
+    }
+}
